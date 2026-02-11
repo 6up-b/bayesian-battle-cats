@@ -71,9 +71,13 @@ options:
                         separated. Example: "Gold Cat, Pirate Cat"
   --estimate-rolls      Estimate how many additional rolls are needed to
                         identify the exact seed, using posterior entropy H(S)
-                        and next-roll entropy H(Y).```
+                        and next-roll entropy H(Y).
+```
+## Example
+```python
+python3 bc_bayes_exact.py   --start 0 --end 2000000000   --predict-k 30   --print-pos 20   --entropy   --estimate-rolls --show-cat "Uber" --paste paste_plat.txt
+```
 
-```python python3 bc_bayes_exact.py   --start 0 --end 2000000000   --predict-k 30   --print-pos 20   --entropy   --estimate-rolls --show-cat "Uber" --paste paste_plat.txt ```
 
 
 
