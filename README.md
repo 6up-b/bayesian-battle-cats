@@ -1,7 +1,33 @@
+## Battle Cats Bayesian Seed Tracker
+
+Seed tracking and prediction tool for Battle Cats gacha banners. Reconstruct possible RNG states from observed rolls and predicts future rolls using
+- exact seed matching
+- Bayesian posterior updates
+- entropy based uncertainty estimation
+- conditional prediciton from mixture
+
 ## About
+Battle Cats uses deterministic RNG. Given enough observed rolls, the RNG seed is uniquely identifiable. Over time the posterior collapses into a single seed.
+
 When seed tracking, the usual method is to brute force for the true seed. 
 Sometimes though you can get more informative roll sequences that do not need to be brute forced. You can be informed on the value of the next cat from the pool of remaining possible seeds, without knowing the true seed value. This can help inform you early whether to invest more gold rare tickets into a given campaign to find your actual seed or find out early if all the possibilities are dogshit. 
 
+You can use the remaining entropy to see how many gold rare tickets you would need to find your real seed value.
+
+Note that the reroll logic depends on previous roll and posterior tracks seed only
+
+## Installation
+- python 3.9
+- cython
+- setuptools
+```python
+pip install cython setuptools
+
+```
+I included my cython c file for gnu/linux people. For windows you have to build the seed seeker using setup.py. 
+```python
+python setup.py build_ext --inplace
+```
 ## Usage
 Enter your rolls into rolls.txt and the paste of the gacha infomration (probabilities) into paste.txt (default naming). You can get the scraped information from BC godfat.
 
@@ -48,5 +74,6 @@ options:
                         and next-roll entropy H(Y).```
 
 ``` python3 bc_bayes_exact.py   --start 0 --end 2000000000   --predict-k 30   --print-pos 20   --entropy   --estimate-rolls --show-cat "Uber" --paste paste_plat.txt ```
+
 
 
