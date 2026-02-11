@@ -79,6 +79,70 @@ python3 bc_bayes_exact.py   --start 0 --end 2000000000   --predict-k 30   --prin
 ```
 
 
+## Technical slop
+
+Battle Cats uses a deterministic pseudorandom number generator. Each roll is produced by advancing the seed and mapping values to: 
+1. rarity
+2. unit slot
+3. reroll logic (for duplicate handling)
+
+$$ s_{t+1} = f(s_t) $$
+
+Where $f$ is the Xorshift funtion
+
+$$s \oplus = s \ll 13 $$
+$$ s \oplus = s \gg 17 $$
+$$ s \oplus =s \ll 15 $$
+This transformation is deterministic and invertible in the 32 bit state space.
+$$ \text{roll outcome} = g(s_t) $$
+
+Observed roll constraints:
+
+$$g(f^{(1)}(s)) = y_1$$
+$$g(f^{(2)}(s)) = y_2$$
+$$\ldots$$
+$$g(f^{(n)}(s)) = y_n $$
+
+The seed finder searches for $` s \in [0,2^{32}]) : \text{given rolls} `$ to produce a set of candidate seeds $` S = \{s_1, s_2, ..., s_k \} `$
+if $k=1$ the seed is uniquely determined and the value of all future rolls is deterministic.
+
+To predict futur rolls, we have a mixture distribution $$P(Y_{t+k}) = \sum_{s \in S} P(Y_{t+k} | s) P(s) $$.
+
+Since each seed produces exactly 1 outcome: 
+
+$$P(Y_{t+k} = y) = \sum_{s : g(f^{(k)}(s))=y} P(s) $$ 
+
+for next roll, roll+2, ..., roll+k
+
+## Entropy as a measure of uncertainty
+
+Posterior uncertanty is measured via
+$$H(S) = -\sum_s P(s) \log_2 P(s) $$
+
+Effective candidate count:
+$$N_{\text{eff}} = 2^{H(S)} $$
+
+Uncertainty in the next roll:
+
+$$H(Y) = -\sum_y P(y) \log_2 P(y) $$
+Mapping from seed to outcome is deterministic so each roll reveals information about the seed.
+
+To approximate the rolls needed to determine the seed using bits of information gained from the previous rolls,
+$$\text{rolls remaining} \\approx \frac{H(S)}{H(Y)} $$
+assuming average case information gain
+
+Predictions collapse quickly because observed rolls eliminate seeds exponentially
+Each roll partitions the seed space
+$$|S_{n+1}| \approx \frac{|S_n|}{\text{effective branching factor}} $$
+
+rare or distinctive outcomes will prune more seeds.
+
+System is like a degenerate HMM where the hidden state is the RNG true seed, we use rolled cats as observations with deterministic PRNG transitions, and a deterministic mapping emission. Inference usually reduces to filtering after around 4 rolls. 
+
+
+
+
+
 
 
 
