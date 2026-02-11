@@ -1,5 +1,10 @@
+## About
+When seed tracking, the usual method is to brute force for the true seed. 
+Sometimes though you can get more informative roll sequences that do not need to be brute forced. You can be informed on the value of the next cat from the pool of remaining possible seeds, without knowing the true seed value. This can help inform you early whether to invest more gold rare tickets into a given campaign to find your actual seed or find out early if all the possibilities are dogshit. 
+
 ## Usage
-Enter your rolls into rolls.txt and the paste of the gacha infomration (probabilities) into paste.txt (default naming)
+Enter your rolls into rolls.txt and the paste of the gacha infomration (probabilities) into paste.txt (default naming). You can get the scraped information from BC godfat.
+
 Once you save your posterior as a pickle using --use-pickle, rolls.txt will be used for the rolls following whatever you made to generate the posterior.
 
 ```python
@@ -42,5 +47,6 @@ options:
                         identify the exact seed, using posterior entropy H(S)
                         and next-roll entropy H(Y).```
 
-```python3 bc_bayes_exact.py   --start 0 --end 2000000000   --predict-k 30   --print-pos 20   --entropy   --estimate-rolls --show-cat "Uber" --paste paste_plat.txt ```
+``` python3 bc_bayes_exact.py   --start 0 --end 2000000000   --predict-k 30   --print-pos 20   --entropy   --estimate-rolls --show-cat "Uber" --paste paste_plat.txt ```
+
 
