@@ -2,7 +2,7 @@
 Enter your rolls into rolls.txt and the paste of the gacha infomration (probabilities) into paste.txt (default naming)
 Once you save your posterior as a pickle using --use-pickle, rolls.txt will be used for the rolls following whatever you made to generate the posterior.
 
-``
+```python
 usage: bc_bayes_exact.py [-h] [--paste PASTE] [--posterior-pkl POSTERIOR_PKL]
                          [--use-pickle] [--save-pickle] [--start START]
                          [--end END] [--max-found MAX_FOUND]
@@ -40,7 +40,7 @@ options:
                         separated. Example: "Gold Cat, Pirate Cat"
   --estimate-rolls      Estimate how many additional rolls are needed to
                         identify the exact seed, using posterior entropy H(S)
-                        and next-roll entropy H(Y).
-``
+                        and next-roll entropy H(Y).```
 
-``python3 bc_bayes_exact.py   --start 0 --end 2000000000   --predict-k 30   --print-pos 20   --entropy   --estimate-rolls --show-cat "Uber" --paste paste_plat.txt ``
+```python3 bc_bayes_exact.py   --start 0 --end 2000000000   --predict-k 30   --print-pos 20   --entropy   --estimate-rolls --show-cat "Uber" --paste paste_plat.txt ```
+
